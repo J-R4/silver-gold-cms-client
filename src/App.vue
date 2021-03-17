@@ -1,29 +1,38 @@
 <template>
   <div id="app">
-    <Navbar />
-    <Login />
-    <Register />
+    <Navbar v-if="isLogin === true" />
+    <router-view />
   </div>
 </template>
 
 <script>
-import Login from './views/login.vue'
-import Register from './views/register.vue'
-import Navbar from './components/navbar.vue'
+import Navbar from '@/components/navbar.vue'
+import { mapState } from 'vuex'
 
 export default {
   name: 'sgApp',
+  data () {
+    return {
+    }
+  },
   components: {
-    Login,
-    Register,
     Navbar
+  },
+  computed: {
+    ...mapState(['isLogin'])
+  },
+  created () {
+    if (localStorage.getItem('access_token')) {
+      this.$store.dispatch('access', true)
+    } else {
+      this.$store.dispatch('access', false)
+    }
   }
 }
 </script>
 
 <style>
 html {
-  background-color: #dbdbdb;
   background-image: url("https://silverandgold.s3-ap-southeast-1.amazonaws.com/wallpaper/wallpaper.jpg");
 }
 
@@ -41,11 +50,6 @@ body {
 
 #nav {
   padding: 30px;
-}
-
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
 }
 
 #nav a.router-link-exact-active {

@@ -1,12 +1,20 @@
 <template>
-  <div class="columns">
-
+  <div class="">
+    <Products />
   </div>
 </template>
 
 <script>
+import Products from '@/views/Products.vue'
 
 export default {
-  name: 'Home'
+  name: 'Home',
+  data () {
+    return {
+    }
+  },
+  components: {
+    Products
+  }
 }
 </script>
