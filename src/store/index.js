@@ -3,7 +3,7 @@ import Vuex from 'vuex'
 import axios from '../api/axios.js'
 import router from '../router/index.js'
 
-const baseURL = 'http://localhost:3000/'
+const baseURL = 'https://silver-and-gold-admin.herokuapp.com/'
 
 Vue.use(Vuex)
 
