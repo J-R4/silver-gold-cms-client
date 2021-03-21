@@ -117,4 +117,7 @@ export default {
 .notAdmin :hover {
   color: #cecece;
 }
+body {
+  overflow-y: hidden !important;
+}
 </style>

@@ -28,7 +28,7 @@
               <figure class="image"><img
                   :src="ban.image_url"
                   class="is-rounded"
-                  style="height: 400px; width: 300px;"
+                  style="height: 400px; width: 1000px;"
                 ></figure>
             </td>
             <td>{{ban.status}}</td>
@@ -67,6 +67,9 @@ export default {
     })
   },
   created () {
+    this.$store.dispatch('getAllBanner')
+  },
+  mounted () {
     this.$store.dispatch('getAllBanner')
   }
 }

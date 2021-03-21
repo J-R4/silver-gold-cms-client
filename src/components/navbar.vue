@@ -32,7 +32,7 @@
       >
         <div class="navbar-start">
           <a class="navbar-item">
-            Home
+            <router-link to="/products">Home</router-link>
           </a>
 
           <div class="navbar-item has-dropdown is-hoverable">
@@ -64,6 +64,9 @@
               </a>
             </div>
           </div>
+          <a class="navbar-item">
+            <router-link to="/categories">Sort by Category (Product)</router-link>
+          </a>
         </div>
 
         <div class="navbar-end">

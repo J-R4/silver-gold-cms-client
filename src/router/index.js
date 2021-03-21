@@ -12,6 +12,8 @@ import Banners from '../views/Banners.vue'
 import EditBan from '../views/EditBan.vue'
 import AddBan from '../views/AddBan.vue'
 
+import Categories from '../views/Categories.vue'
+
 Vue.use(VueRouter)
 
 const routes = [
@@ -54,6 +56,11 @@ const routes = [
     path: '/editBan',
     name: 'Edit Banner',
     component: EditBan
+  },
+  {
+    path: '/categories',
+    name: 'Categories',
+    component: Categories
   }
 ]
 

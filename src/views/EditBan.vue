@@ -99,6 +99,7 @@ export default {
         title: this.title,
         status: this.status
       })
+      this.$router.push('/banners')
     }
   }
 }

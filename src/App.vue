@@ -34,6 +34,10 @@ export default {
 <style>
 html {
   background-image: url("https://silverandgold.s3-ap-southeast-1.amazonaws.com/wallpaper/wallpaper.jpg");
+  background-repeat: no-repeat;
+  background-size: auto;
+  background-position: center;
+  background-attachment: fixed;
 }
 
 body {

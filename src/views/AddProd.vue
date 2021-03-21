@@ -124,7 +124,8 @@ export default {
       imageURL: '',
       name: '',
       price: 0,
-      stock: 0
+      stock: 0,
+      category: ''
     }
   },
   methods: {
@@ -133,7 +134,8 @@ export default {
         imageURL: this.imageURL,
         name: this.name,
         price: this.price,
-        stock: this.stock
+        stock: this.stock,
+        category: this.category
       })
     }
   }

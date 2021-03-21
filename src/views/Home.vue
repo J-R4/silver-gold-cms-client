@@ -15,6 +15,9 @@ export default {
   },
   components: {
     Products
+  },
+  created () {
+    this.$router.push('/products')
   }
 }
 </script>

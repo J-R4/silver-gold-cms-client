@@ -11,6 +11,7 @@ export default new Vuex.Store({
   state: {
     products: [],
     banners: [],
+    categories: [],
     isLogin: false,
     readyId: 0
   },
@@ -79,6 +80,7 @@ export default new Vuex.Store({
         headers: { access_token: localStorage.access_token }
       })
         .then(({ data }) => {
+          console.log(data, 'ini dari get all')
           context.commit('showAllBanner', data.banner)
         })
         .catch((err) => {
@@ -86,11 +88,11 @@ export default new Vuex.Store({
         })
     },
     addProduct (context, payload) {
-      const { name, price, stock } = payload
+      const { name, price, stock, category } = payload
       axios({
         method: 'POST',
         url: baseURL + 'products',
-        data: { name, image_url: payload.imageURL, price, stock },
+        data: { name, image_url: payload.imageURL, price, stock, category },
         headers: { access_token: localStorage.access_token }
       })
         .then((response) => {
@@ -118,12 +120,12 @@ export default new Vuex.Store({
         })
     },
     editProduct (context, payload) {
-      const { name, price, stock } = payload
+      const { name, price, stock, category } = payload
       console.log(this.state.readyId)
       axios({
         method: 'PUT',
         url: baseURL + `products/${this.state.readyId}`,
-        data: { name, image_url: payload.imageURL, price, stock },
+        data: { name, image_url: payload.imageURL, price, stock, category },
         headers: { access_token: localStorage.access_token }
       })
         .then((response) => {
@@ -188,6 +190,7 @@ export default new Vuex.Store({
       })
         .then((response) => {
           console.log(response)
+          router.push('/banners')
         })
         .catch((err) => {
           console.log(err)
@@ -196,6 +199,21 @@ export default new Vuex.Store({
     selectedId (context, payload) {
       const id = payload
       context.commit('theId', id)
+    },
+    sortProducts (context, payload) {
+      const { category } = payload
+      axios({
+        method: 'GET',
+        url: baseURL + 'sort',
+        headers: { access_token: localStorage.access_token },
+        data: { category }
+      })
+        .then(({ data }) => {
+          context.commit('showSort', data.sort)
+        })
+        .catch((err) => {
+          console.log(err)
+        })
     }
   },
   modules: {
