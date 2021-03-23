@@ -12,12 +12,19 @@ export default new Vuex.Store({
     products: [],
     banners: [],
     categories: [],
+    sorted: [],
     isLogin: false,
     readyId: 0
   },
   mutations: {
     theId (state, payload) {
       state.readyId = payload
+    },
+    showCategories (state, payload) {
+      state.categories = payload
+    },
+    showSort (state, payload) {
+      state.sorted = payload
     },
     showAllProduct (state, payload) {
       state.products = payload
@@ -201,12 +208,12 @@ export default new Vuex.Store({
       context.commit('theId', id)
     },
     sortProducts (context, payload) {
-      const { category } = payload
+      const { catId } = payload
       axios({
         method: 'GET',
         url: baseURL + 'sort',
         headers: { access_token: localStorage.access_token },
-        data: { category }
+        data: { catId }
       })
         .then(({ data }) => {
           context.commit('showSort', data.sort)
@@ -214,6 +221,19 @@ export default new Vuex.Store({
         .catch((err) => {
           console.log(err)
         })
+    },
+    getCategories(context, payload) {
+      axios({
+        method: 'GET',
+        url: baseURL + 'categories',
+        headers: { access_token: localStorage.access_token },
+      })
+        .then(({ data }) => {
+          context.commit('showCategories', data.categories)
+        })
+        .catch(((err) => {
+          console.log(err)
+        }))
     }
   },
   modules: {

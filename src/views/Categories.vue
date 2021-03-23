@@ -9,11 +9,12 @@
         <span class="icon is-small is-left">
           <i class="fas fa-align-justify"></i>
         </span>
-        <select v-model="category">
-          <option>Silver</option>
-          <option>Gold</option>
-          <option>Relic</option>
-          <option>Etc</option>
+        <select v-model="catId">
+          <option
+            v-for="cat in categories"
+            :key="cat.id"
+            :value="cat.id"
+          >{{cat.category}}</option>
         </select>
         <button>
           <a
@@ -44,7 +45,7 @@
           </thead>
           <tbody>
             <tr
-              v-for="prod in showByCats"
+              v-for="prod in showByCategory"
               :key="prod.id"
             >
               <td>{{prod.id}}</td>
@@ -58,7 +59,6 @@
               </td>
               <td>Rp. {{prod.price}},-</td>
               <td>{{prod.stock}}</td>
-              <td>{{prod.category}}</td>
             </tr>
           </tbody>
         </table>
@@ -74,18 +74,23 @@ export default {
   name: 'categories',
   data () {
     return {
-      category: ''
+      catId: 0
     }
   },
   methods: {
     sortBy () {
-      this.$store.dispatch('sortProducts', this.category)
+      this.$store.dispatch('sortProducts', this.catId)
     }
   },
   computed: {
     ...mapState({
-      showByCats: 'categories'
+      allCategory: 'categories',
+      showByCategory: 'sorted'
     })
+  },
+  created () {
+    this.$store.dispatch('getCategories')
+    this.$store.dispatch('sortProducts', this.catId)
   }
 }
 </script>
