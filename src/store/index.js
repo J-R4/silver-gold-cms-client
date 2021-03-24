@@ -222,18 +222,18 @@ export default new Vuex.Store({
           console.log(err)
         })
     },
-    getCategories(context, payload) {
+    getCategories (context, payload) {
       axios({
         method: 'GET',
         url: baseURL + 'categories',
-        headers: { access_token: localStorage.access_token },
+        headers: { access_token: localStorage.access_token }
       })
         .then(({ data }) => {
           context.commit('showCategories', data.categories)
         })
-        .catch(((err) => {
+        .catch(err => {
           console.log(err)
-        }))
+        })
     }
   },
   modules: {
