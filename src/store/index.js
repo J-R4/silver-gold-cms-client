@@ -110,7 +110,6 @@ export default new Vuex.Store({
         headers: { access_token: localStorage.access_token }
       })
         .then(({ data }) => {
-          console.log(data, 'ini dari get all')
           context.commit('showAllBanner', data.banner)
         })
         .catch((err) => {

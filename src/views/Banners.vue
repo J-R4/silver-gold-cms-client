@@ -55,7 +55,6 @@ export default {
   name: 'banners',
   methods: {
     editBan (id) {
-      console.log(id)
       this.$store.dispatch('selectedId', id)
     },
     deleteBan (id) {
