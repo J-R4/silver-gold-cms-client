@@ -23,7 +23,7 @@
                 class="input"
                 id="name"
                 type="text"
-                placeholder="e.g. Love Somebody"
+                :placeholder="theProduct.name"
               >
               <span class="icon is-small is-left">
                 <i class="fas fa-prescription-bottle"></i>
@@ -39,7 +39,7 @@
                 class="input"
                 id="imageURL"
                 type="text"
-                placeholder="e.g. YouAreLoved.com/images/1.jpg"
+                :placeholder="theProduct.image_url"
               >
               <span class="icon is-small is-left">
                 <i class="fas fa-link"></i>
@@ -48,14 +48,14 @@
           </div>
 
           <div class="field">
-            <label class="label">Price</label>
+            <label class="label">Price </label>
+            <i>(previous value: Rp. {{theProduct.price}},- )</i>
             <div class="control has-icons-left">
               <input
                 v-model="price"
                 class="input"
                 id="price"
-                type="text"
-                placeholder="1000000"
+                type="number"
               >
               <span class="icon is-small is-left">
                 <i class="fas fa-dollar-sign"></i>
@@ -65,13 +65,14 @@
 
           <div class="field">
             <label class="label">Stock</label>
+            <i>(previous value: {{theProduct.stock}} )</i>
             <div class="control has-icons-left">
               <input
                 v-model="stock"
                 class="input"
                 id="stock"
-                type="text"
-                placeholder="1000000"
+                type="number"
+                :placeholder="theProduct.stock"
               >
               <span class="icon is-small is-left">
                 <i class="fas fa-list-ol"></i>
@@ -82,16 +83,16 @@
           <div class="field">
 
             <div class="control has-icons-left">
-              <label class="label">Category</label>
+              <label class="label">Category <i>(previous value: {{theProduct.category}} )</i> <br></label>
               <div class="select is-link">
                 <span class="icon is-small is-left">
                   <i class="fas fa-align-justify"></i>
                 </span>
                 <select v-model="category">
-                  <option>Silver</option>
-                  <option>Gold</option>
-                  <option>Relic</option>
-                  <option>Etc</option>
+                  <option
+                    v-for="cat in categories"
+                    :key="cat.id"
+                  >{{cat.category}}</option>
                 </select>
               </div>
             </div>
@@ -117,6 +118,8 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 export default {
   name: 'editProd',
   data () {
@@ -124,8 +127,12 @@ export default {
       imageURL: '',
       name: '',
       price: 0,
-      stock: 0
+      stock: 0,
+      category: ''
     }
+  },
+  computed: {
+    ...mapState(['readyId', 'theProduct', 'categories'])
   },
   methods: {
     editOne () {
@@ -136,6 +143,10 @@ export default {
         stock: this.stock
       })
     }
+  },
+  mounted () {
+    this.$store.dispatch('getOneProduct', this.readyId)
+    this.$store.dispatch('getCategories', this.readyId)
   }
 }
 </script>

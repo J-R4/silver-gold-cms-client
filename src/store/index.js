@@ -3,14 +3,17 @@ import Vuex from 'vuex'
 import axios from '../api/axios.js'
 import router from '../router/index.js'
 
-const baseURL = 'https://silver-and-gold-admin.herokuapp.com/'
+// const baseURL = 'https://silver-and-gold-admin.herokuapp.com/'
+const baseURL = 'http://localhost:3000/'
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
     products: [],
+    theProduct: {},
     banners: [],
+    theBanner: {},
     categories: [],
     sorted: [],
     isLogin: false,
@@ -29,8 +32,14 @@ export default new Vuex.Store({
     showAllProduct (state, payload) {
       state.products = payload
     },
+    showOneProduct (state, payload) {
+      state.theProduct = payload
+    },
     showAllBanner (state, payload) {
       state.banners = payload
+    },
+    showOneBanner (state, payload) {
+      state.theBanner = payload
     },
     LOGIN (state, payload) {
       state.isLogin = payload
@@ -80,6 +89,20 @@ export default new Vuex.Store({
           console.log(err)
         })
     },
+    getOneProduct (context, payload) {
+      console.log(payload)
+      axios({
+        method: 'GET',
+        url: baseURL + `products/${payload}`,
+        headers: { access_token: localStorage.access_token }
+      })
+        .then(({ data }) => {
+          context.commit('showOneProduct', data.theProduct)
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    },
     getAllBanner (context, payload) {
       axios({
         method: 'GET',
@@ -89,6 +112,19 @@ export default new Vuex.Store({
         .then(({ data }) => {
           console.log(data, 'ini dari get all')
           context.commit('showAllBanner', data.banner)
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    },
+    getOneBanner (context, payload) {
+      axios({
+        method: 'GET',
+        url: baseURL + `banners/${payload}`,
+        headers: { access_token: localStorage.access_token }
+      })
+        .then(({ data }) => {
+          context.commit('showOneBanner', data.theBanner)
         })
         .catch((err) => {
           console.log(err)
@@ -182,6 +218,7 @@ export default new Vuex.Store({
       })
         .then((response) => {
           console.log(response)
+          context.dispatch('getAllProduct')
           router.push('/products')
         })
         .catch((err) => {
@@ -197,6 +234,7 @@ export default new Vuex.Store({
       })
         .then((response) => {
           console.log(response)
+          context.dispatch('getAllBanner')
           router.push('/banners')
         })
         .catch((err) => {

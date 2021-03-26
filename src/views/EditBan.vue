@@ -23,7 +23,7 @@
                 class="input"
                 id="title"
                 type="text"
-                placeholder="e.g. Love Somebody"
+                :placeholder="theBanner.title"
               >
               <span class="icon is-small is-left">
                 <i class="fas fa-prescription-bottle"></i>
@@ -39,7 +39,7 @@
                 class="input"
                 id="imageURL"
                 type="text"
-                placeholder="e.g. YouAreLoved.com/images/1.jpg"
+                :placeholder="theBanner.image_url"
               >
               <span class="icon is-small is-left">
                 <i class="fas fa-link"></i>
@@ -50,7 +50,7 @@
           <div class="field">
 
             <div class="control has-icons-left">
-              <label class="label">Status</label>
+              <label class="label">Status <i>(previous value: {{theBanner.status}} )</i></label>
               <div class="select is-link">
                 <span class="icon is-small is-left">
                   <i class="fas fa-align-justify"></i>
@@ -83,6 +83,8 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 export default {
   name: 'editBan',
   data () {
@@ -91,6 +93,9 @@ export default {
       title: '',
       status: ''
     }
+  },
+  computed: {
+    ...mapState(['readyId', 'theBanner'])
   },
   methods: {
     editOneBan () {
@@ -101,6 +106,9 @@ export default {
       })
       this.$router.push('/banners')
     }
+  },
+  mounted () {
+    this.$store.dispatch('getOneBanner', this.readyId)
   }
 }
 </script>
