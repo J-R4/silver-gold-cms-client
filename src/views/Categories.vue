@@ -11,7 +11,7 @@
         </span>
         <select v-model="catId">
           <option
-            v-for="cat in categories"
+            v-for="cat in allCategory"
             :key="cat.id"
             :value="cat.id"
           >{{cat.category}}</option>
@@ -90,7 +90,6 @@ export default {
   },
   created () {
     this.$store.dispatch('getCategories')
-    this.$store.dispatch('sortProducts', this.catId)
   }
 }
 </script>
